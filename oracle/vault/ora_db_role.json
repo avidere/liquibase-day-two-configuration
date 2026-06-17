@@ -1,0 +1,6 @@
+{
+  "db_name": "${APP_CIID}_${AWS_ACCOUNT}_${DB_TYPE}_${DB_IDENTIFIER}",
+  "rotation_statements" : " 'ALTER USER {{username}} IDENTIFIED BY \"{{password}}\";' ",
+  "username": "${master_user}",
+  "rotation_period": "75d"
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id= "${BUILD_NUMBER}" author= "DAY2-PROVISIONER">
+        <tagDatabase tag="${REQUEST_NUMBER}-${BUILD_NUMBER}"/>
+    </changeSet>    
+    <include file="oracle/sql/create_schema.sql" />
+    <include file="oracle/sql/ora_create_function.sql" />
+    <include file="oracle/sql/ora_create_profile.sql" />
+    <include file="oracle/sql/create_role.sql" />
+    <include file="oracle/sql/create_user.sql" />
+    ${CREATE_MIGRATION_USER}
+
+</databaseChangeLog>

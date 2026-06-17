@@ -1,0 +1,7 @@
+{
+    "plugin_name" : "vault-plugin-database-oracle",
+    "allowed_roles": "*",
+    "connection_url": "{{username}}/{{password}}@(DESCRIPTION=(ADDRESS=(PROTOCOL=tcps)(HOST=${endpoint})(PORT=${port}))(CONNECT_DATA=(SERVICE_NAME=${DB_NAME})))(SECURITY=(SSL_SERVER_CERT_DN= \"CN=US, ST=Washington, L=Seattle, O=Amazon.com, OU=RDS, CN=${endpoint}\")(MY_WALLET_DIRECTORY=${wallet_dir}))",
+    "username": "${VAULT_ADMIN_USER}",
+    "password": "${VAULT_ADMIN_PASS}"
+}

@@ -1,0 +1,136 @@
+--liquibase formatted sql
+
+--changeset Day2_Create_User:DBA-LIQ runOnChange:true runWith:sqlplus
+--comment:Liquibase DBA user creation
+CREATE USER ${DBA_LIQUIBASE_USER}
+IDENTIFIED BY "${DBA_LIQUIBASE_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${DBA_LIQUIBASE_USER} PROFILE APPS_USER;
+GRANT DBA TO ${DBA_LIQUIBASE_USER};
+ALTER USER ${DBA_LIQUIBASE_USER} QUOTA UNLIMITED ON USERS;
+
+--rollback DROP USER ${DBA_LIQUIBASE_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:DARE-LIQ runOnChange:true runWith:sqlplus
+--comment:Liquibase DARE user creation
+
+CREATE USER ${DARE_LIQUIBASE_USER}
+IDENTIFIED BY "${DARE_LIQUIBASE_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${DARE_LIQUIBASE_USER} PROFILE APPS_USER;
+GRANT DBA TO ${DARE_LIQUIBASE_USER};
+ALTER USER ${DARE_LIQUIBASE_USER} QUOTA UNLIMITED ON USERS;
+
+--rollback DROP USER ${DARE_LIQUIBASE_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:APP-LIQ runOnChange:true runWith:sqlplus
+--comment:Liquibase App user creation
+
+CREATE USER ${APP_LIQUIBASE_USER}
+IDENTIFIED BY "${APP_LIQUIBASE_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${APP_LIQUIBASE_USER} PROFILE APPS_USER;
+GRANT CONNECT, RESOURCE, SELECT_CATALOG_ROLE TO ${APP_LIQUIBASE_USER};
+ALTER USER ${APP_LIQUIBASE_USER} QUOTA UNLIMITED ON USERS;
+GRANT READ_WRITE TO ${APP_LIQUIBASE_USER};
+
+--rollback DROP USER ${APP_LIQUIBASE_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:DBA runOnChange:true runWith:sqlplus
+--comment: DBA user creation for admin operations
+
+CREATE USER ${SYSDBA_USER}
+IDENTIFIED BY "${SYSDBA_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${SYSDBA_USER} PROFILE END_USER;
+GRANT DBA TO ${SYSDBA_USER};
+ALTER USER ${SYSDBA_USER} QUOTA UNLIMITED ON USERS;
+
+--rollback DROP USER ${SYSDBA_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:DBA-VAULT runOnChange:true runWith:sqlplus
+--comment: User to setup vault credential rotation for master user
+
+CREATE USER ${VAULT_ADMIN_USER}
+IDENTIFIED BY "${VAULT_ADMIN_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${VAULT_ADMIN_USER} PROFILE APPS_USER;
+GRANT ALTER USER TO ${VAULT_ADMIN_USER};
+GRANT CONNECT TO ${VAULT_ADMIN_USER};
+
+--rollback DROP USER ${VAULT_ADMIN_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:Devops-VAULT runOnChange:true runWith:sqlplus
+--comment: User to setup vault credential rotation for liquibase users
+
+CREATE USER ${DEVOPS_VAULT_USER}
+IDENTIFIED BY "${DEVOPS_VAULT_PASS}"
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${DEVOPS_VAULT_USER} PROFILE APPS_USER;
+GRANT ALTER USER TO ${DEVOPS_VAULT_USER};
+GRANT CONNECT TO ${DEVOPS_VAULT_USER};
+
+--rollback DROP USER ${DEVOPS_VAULT_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:BIGID runOnChange:true runWith:sqlplus
+--comment: ReadOnly user for BigID Team
+
+CREATE USER ${BIGID_USER}
+IDENTIFIED BY "${BIGID_PASS}"
+DEFAULT TABLESPACE TOOLS
+TEMPORARY TABLESPACE TEMP;
+
+ALTER USER ${BIGID_USER} PROFILE APPS_USER;
+ALTER USER ${BIGID_USER} QUOTA UNLIMITED ON TOOLS;
+
+GRANT CONNECT TO ${BIGID_USER};
+GRANT RESOURCE TO ${BIGID_USER};
+GRANT ${BIGID_ROLE} TO ${BIGID_USER};
+
+--rollback DROP USER ${BIGID_USER} CASCADE;
+
+--------------------------------------------------------------------------------
+
+--changeset Day2_Create_User:METADATAQ runOnChange:true runWith:sqlplus
+--comment: User for DATA OFFICE Team
+
+CREATE USER ${METADATAQ_USER}
+IDENTIFIED BY "${METADATAQ_PASS}"
+DEFAULT TABLESPACE TOOLS
+TEMPORARY TABLESPACE TEMP
+ACCOUNT UNLOCK;
+
+ALTER USER ${METADATAQ_USER} PROFILE APPS_USER;
+ALTER USER ${METADATAQ_USER} QUOTA UNLIMITED ON TOOLS;
+
+GRANT CONNECT TO ${METADATAQ_USER};
+GRANT SELECT_CATALOG_ROLE TO ${METADATAQ_USER};
+ALTER USER ${METADATAQ_USER} DEFAULT ROLE ALL;
+
+GRANT CREATE SESSION TO METADATAQ;
+
+--rollback DROP USER ${METADATAQ_USER} CASCADE;
