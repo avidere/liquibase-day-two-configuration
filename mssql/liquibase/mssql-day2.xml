@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="mssql/sql/mss_create_database.sql"/>
+    <include file="mssql/sql/mss_create_user.sql"/>
+    <include file="mssql/sql/mss_create_role.sql"/>
+    <!-- <include file="mssql/sql/mss_app_user.sql"/>
+    <include file="mssql/sql/mss_app_role.sql"/> -->
+    
+
+</databaseChangeLog>

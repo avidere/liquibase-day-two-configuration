@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Hardcoded baseline tracker to eliminate CLI variable injections -->
+    <changeSet id="initial-setup-2026" author="DAY2-PROVISIONER">
+        <tagDatabase tag="123-123"/>
+    </changeSet>
+
+    <!-- STEP 1: Provision Core Databases & Automation Logins -->
+    <include file="mssql/sql/create_liquibase_user.sql"/>
+
+    <!-- STEP 2: Provision Super Admin Account (sysdba & DBA_Role) -->
+    <include file="mssql/sql/create_dba_users.sql"/>
+
+    <!-- STEP 3: Provision End-User Application Roles and Logins (app_ro, app_rw) -->
+    <include file="mssql/sql/create_app_users.sql"/>
+
+</databaseChangeLog>
